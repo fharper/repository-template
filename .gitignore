@@ -1,2 +1,6 @@
-# stupid macOS .DS_Store
+# Node.js
+node_modules/
+
+# macOS
 .DS_Store
+
