@@ -1,3 +1,4 @@
+---
 name: Terraform Validation
 on: [push, workflow_dispatch]
 
@@ -11,30 +12,30 @@ jobs:
 
     steps:
 
-    - name: Checkout this repository
-      uses: actions/checkout@master
+      - name: Checkout this repository
+        uses: actions/checkout@master
 
-    - name: Download .tflint.hcl
-      uses: fharper/wget@v1
-      with:
-        args: -O .tflint.hcl https://raw.githubusercontent.com/fharper/gh-configs/main/.tflint.hcl
+      - name: Download .tflint.hcl
+        uses: fharper/wget@v1
+        with:
+          args: -O .tflint.hcl https://raw.githubusercontent.com/fharper/gh-configs/main/.tflint.hcl
 
-    - uses: actions/cache@v3
-      name: Cache plugins directory
-      with:
-        path: ~/.tflint.d/plugins
-        key: ${{ matrix.os }}-tflint-${{ hashFiles('.tflint.hcl') }}
+      - uses: actions/cache@v3
+        name: Cache plugins directory
+        with:
+          path: ~/.tflint.d/plugins
+          key: ${{ matrix.os }}-tflint-${{ hashFiles('.tflint.hcl') }}
 
-    - uses: terraform-linters/setup-tflint@v3
-      name: Setup TFLint
-      with:
-        tflint_version: v0.44.1
+      - uses: terraform-linters/setup-tflint@v3
+        name: Setup TFLint
+        with:
+          tflint_version: v0.44.1
 
-    - name: Init TFLint
-      run: tflint --init
-      env:
-        # https://github.com/terraform-linters/tflint/blob/master/docs/user-guide/plugins.md#avoiding-rate-limiting
-        GITHUB_TOKEN: ${{ github.token }}
+      - name: Init TFLint
+        run: tflint --init
+        env:
+          # https://github.com/terraform-linters/tflint/blob/master/docs/user-guide/plugins.md#avoiding-rate-limiting
+          GITHUB_TOKEN: ${{ github.token }}
 
-    - name: Run TFLint
-      run: tflint -f compact
+      - name: Run TFLint
+        run: tflint -f compact
