@@ -16,7 +16,7 @@ jobs:
 
         - name: Create the folders
           run: |
-            mkdir styles && mkdir styles/Custom && mkdir styles/Vocab && mkdir styles/Vocab/base
+            mkdir -p styles && mkdir -p styles/Custom && mkdir -p styles/Vocab && mkdir -p styles/Vocab/base
 
         - name: Download Custom Style ignore.txt
           uses: fharper/wget@v1
