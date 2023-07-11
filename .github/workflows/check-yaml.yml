@@ -1,0 +1,23 @@
+---
+name: YAML Validation
+on: [push, workflow_dispatch]
+
+jobs:
+  yaml-check:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout this repository
+        uses: actions/checkout@master
+
+      - name: Download .yamllint.yml
+        uses: fharper/wget@v1
+        with:
+          args: -O .yamllint.yml https://raw.githubusercontent.com/fharper/gh-configs/main/.yamllint.yml
+
+      - name: Lint YAML files
+        uses: karancode/yamllint-github-action@master
+        with:
+          yamllint_config_datapath: .yamllint.yml
+        env:
+          GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
