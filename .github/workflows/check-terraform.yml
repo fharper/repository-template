@@ -17,7 +17,7 @@ jobs:
     - name: Download .tflint.hcl
       uses: fharper/wget@v1
       with:
-        args: https://raw.githubusercontent.com/fharper/gh-configs/main/.tflint.hcl
+        args: -O .tflint.hcl https://raw.githubusercontent.com/fharper/gh-configs/main/.tflint.hcl
 
     - uses: actions/cache@v3
       name: Cache plugins directory

@@ -12,7 +12,7 @@ jobs:
         - name: Download .vale.ini
           uses: fharper/wget@v1
           with:
-            args: https://raw.githubusercontent.com/fharper/gh-configs/main/.vale.ini
+            args: -O .vale.ini https://raw.githubusercontent.com/fharper/gh-configs/main/.vale.ini
 
         - name: Create the folders
           run: |
