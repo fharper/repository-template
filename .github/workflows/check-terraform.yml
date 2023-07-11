@@ -16,9 +16,9 @@ jobs:
         uses: actions/checkout@master
 
       - name: Download .tflint.hcl
-        uses: fharper/wget@v1
+        uses: suisei-cn/actions-download-file@v1.4.0
         with:
-          args: -O .tflint.hcl https://raw.githubusercontent.com/fharper/gh-configs/main/.tflint.hcl
+          url: "https://raw.githubusercontent.com/fharper/gh-configs/main/.tflint.hcl"
 
       - uses: actions/cache@v3
         name: Cache plugins directory
