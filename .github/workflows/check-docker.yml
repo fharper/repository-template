@@ -1,0 +1,16 @@
+---
+name: Dockerfile Validation
+on: [push, workflow_dispatch]
+
+jobs:
+  docker-check:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout this repository
+        uses: actions/checkout@master
+
+      - name: Checkout this repository
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: Dockerfile
