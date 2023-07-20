@@ -19,5 +19,6 @@ jobs:
         uses: karancode/yamllint-github-action@master
         with:
           yamllint_config_datapath: .yamllint.yml
+          yamllint_strict: true
         env:
           GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
