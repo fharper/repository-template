@@ -17,10 +17,10 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           # if needed them to be signed
-          #commitAuthorName: 'Fred'
-          #commitAuthorEmail: ${{ secrets.GPG_EMAIL }}
-          #gpgPrivateKey: ${{ secrets.GPG_KEY }}
-          #gpgPassphrase: ${{ secrets.GPG_PASSPHRASE }}
+          # commitAuthorName: 'Fred'
+          # commitAuthorEmail: ${{ secrets.GPG_EMAIL }}
+          # gpgPrivateKey: ${{ secrets.GPG_KEY }}
+          # gpgPassphrase: ${{ secrets.GPG_PASSPHRASE }}
           # if using commit prefixes
-          #commitTitle: "chore: update license years for {{currentYear}}"
-          #prTitle: "chore: update license years for {{currentYear}}"
+          # commitTitle: "chore: update license years for {{currentYear}}"
+          # prTitle: "chore: update license years for {{currentYear}}"
