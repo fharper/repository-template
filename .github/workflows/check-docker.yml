@@ -16,6 +16,7 @@ jobs:
         with:
           files: "Dockerfile"
 
+      # Rules at https://github.com/hadolint/hadolint#rules
       # hadolint/hadolint-action is causing issue with act: https://github.com/hadolint/hadolint/issues/823
       - name: Validate Dockerfile
         if: steps.check_files.outputs.files_exists == 'true'
