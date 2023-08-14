@@ -27,5 +27,6 @@ jobs:
         with:
           url: "https://raw.githubusercontent.com/fharper/gh-configs/main/.eslintrc.yml"
 
+      # Rules https://eslint.org/docs/latest/rules/
       - name: Run ESLint
         run: eslint .  --format=pretty --ext .js
