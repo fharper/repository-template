@@ -15,7 +15,7 @@ jobs:
           url: "https://raw.githubusercontent.com/fharper/gh-configs/main/.markdownlint.json"
 
       - name: Validate Markdown
-        uses: DavidAnson/markdownlint-cli2-action@v9
+        uses: DavidAnson/markdownlint-cli2-action@v13.0.0
         with:
           command: config
           globs: |
