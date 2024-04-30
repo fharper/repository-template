@@ -13,7 +13,7 @@ jobs:
     steps:
 
       - name: Checkout this repository
-        uses: actions/checkout@master
+        uses: actions/checkout@v4.1.4
 
       - name: Download .tflint.hcl
         uses: suisei-cn/actions-download-file@v1.4.0
