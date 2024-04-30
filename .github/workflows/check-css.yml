@@ -16,6 +16,6 @@ jobs:
           url: "https://raw.githubusercontent.com/fharper/gh-configs/main/.stylelintrc"
 
       - name: stylelint
-        uses: actions-hub/stylelint@master
+        uses: actions-hub/stylelint@v1.1.6
         env:
           PATTERN: "**/*.css"
