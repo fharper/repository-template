@@ -8,7 +8,7 @@ jobs:
     steps:
 
       - name: Checkout this repository
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v6.0.1
 
       - name: Download .markdownlint.json
         uses: suisei-cn/actions-download-file@v1.6.0

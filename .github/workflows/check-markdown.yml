@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout this repository
-        uses: actions/checkout@v4.1.4
+        uses: actions/checkout@v6.0.1
 
       - name: Download .markdownlint.json
         uses: suisei-cn/actions-download-file@v1.4.0
