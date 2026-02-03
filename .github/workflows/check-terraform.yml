@@ -20,7 +20,7 @@ jobs:
         with:
           url: "https://raw.githubusercontent.com/fharper/gh-configs/main/.tflint.hcl"
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v5.0.3
         name: Cache plugins directory
         with:
           path: ~/.tflint.d/plugins
