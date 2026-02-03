@@ -8,7 +8,7 @@ jobs:
   auto-assign:
     runs-on: ubuntu-latest
     permissions:
-        issues: write
+      issues: write
     steps:
 
       - name: Automatically assing the issue
