@@ -4,6 +4,7 @@ on: [push, workflow_dispatch]
 
 permissions:
   contents: read
+  checks: write
 
 jobs:
   syntax-check:
@@ -33,12 +34,12 @@ jobs:
       - name: Download base Vocab accept.txt
         run: curl -fsSL -o styles/config/vocabularies/base/accept.txt https://raw.githubusercontent.com/fharper/gh-configs/main/styles/config/vocabularies/base/accept.txt
 
-      # Not using errata-ai/vale-action since it's never failing on errors: https://github.com/errata-ai/vale-action/issues/103
-      - name: Install Vale
-        run: |
-          curl -fsSL -o vale.tar.gz https://github.com/errata-ai/vale/releases/download/v3.13.0/vale_3.13.0_Linux_64-bit.tar.gz
-          tar -xvzf vale.tar.gz vale
-          rm vale.tar.gz
-
       - name: Validate the syntax
-        run: ./vale --config=.vale.ini --glob="**/*.md" .
+        uses: errata-ai/vale-action@v3.0.0
+        with:
+          version: 3.24.0
+          glob: '**/*.md'
+          sync: false
+          reporter: github-check
+          filter_mode: nofilter
+          fail_on_error: true
