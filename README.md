@@ -16,7 +16,7 @@ These fail with a message naming the file to delete when the project has none of
 | Workflow | Checks | Delete when the project has no… |
 | --- | --- | --- |
 | `check-css.yml` | CSS with stylelint | CSS (also delete `.tools/stylelint/`) |
-| `check-docker.yml` | Dockerfile with hadolint | Dockerfile |
+| `check-docker.yml` | Dockerfile with hadolint | Dockerfile (also delete `.tools/hadolint/` and the `docker` entry in `.github/dependabot.yml`) |
 | `check-json.yml` | JSON syntax | JSON |
 | `check-nodejs.yml` | JavaScript with ESLint and neostandard | `package.json` (also delete `.tools/eslint/`) |
 | `check-svg.yml` | SVG files against SVG 1.1, which needs the XML declaration and SVG 1.1 DOCTYPE | SVG |
