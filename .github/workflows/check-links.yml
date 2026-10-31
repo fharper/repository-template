@@ -16,7 +16,7 @@ jobs:
     steps:
 
       - name: Checkout this repository
-        uses: actions/checkout@v6.0.1
+        uses: actions/checkout@v7.0.1
 
       - name: Download .linkspector.yml
         run: curl -fsSL -o .linkspector.yml https://raw.githubusercontent.com/fharper/gh-configs/main/.linkspector.yml

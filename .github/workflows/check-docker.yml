@@ -17,7 +17,7 @@ jobs:
     steps:
 
       - name: Checkout this repository
-        uses: actions/checkout@v6.0.1
+        uses: actions/checkout@v7.0.1
 
       - name: Check for a Dockerfile
         id: check
@@ -38,7 +38,7 @@ jobs:
     steps:
 
       - name: Checkout this repository
-        uses: actions/checkout@v6.0.1
+        uses: actions/checkout@v7.0.1
 
       # Rules at https://github.com/hadolint/hadolint#rules
       # hadolint/hadolint-action is causing issue with act: https://github.com/hadolint/hadolint/issues/823
