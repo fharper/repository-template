@@ -11,13 +11,15 @@ The starting point for my new repositories: community files, issue templates, De
 
 ## Workflows
 
+These fail with a message naming the file to delete when the project has none of what they check:
+
 | Workflow | Checks | Delete when the project has no… |
 | --- | --- | --- |
 | `check-css.yml` | CSS with stylelint | CSS |
-| `check-docker.yml` | Dockerfile with hadolint | Dockerfile (it skips itself, so it can stay) |
+| `check-docker.yml` | Dockerfile with hadolint | Dockerfile |
 | `check-json.yml` | JSON syntax | JSON |
-| `check-nodejs.yml` | JavaScript with ESLint and neostandard | Node.js project |
-| `check-svg.yml` | SVG files | SVG |
+| `check-nodejs.yml` | JavaScript with ESLint and neostandard | `package.json` |
+| `check-svg.yml` | SVG files against SVG 1.1, which needs the XML declaration and SVG 1.1 DOCTYPE | SVG |
 | `check-terraform.yml` | Terraform with TFLint | Terraform |
 | `update-license.yml` | Copyright year in the license | Year in its license |
 

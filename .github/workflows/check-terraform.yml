@@ -14,6 +14,13 @@ jobs:
       - name: Checkout this repository
         uses: actions/checkout@v6.0.1
 
+      - name: Check for Terraform files
+        run: |
+          if [ -z "$(git ls-files '*.tf')" ]; then
+            echo "::error::No Terraform files found. Delete .github/workflows/check-terraform.yml if this project doesn't need it."
+            exit 1
+          fi
+
       - name: Download .tflint.hcl
         run: curl -fsSL -o .tflint.hcl https://raw.githubusercontent.com/fharper/gh-configs/main/.tflint.hcl
 

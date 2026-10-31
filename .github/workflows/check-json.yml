@@ -13,6 +13,13 @@ jobs:
       - name: Checkout this repository
         uses: actions/checkout@v6.0.1
 
+      - name: Check for JSON files
+        run: |
+          if [ -z "$(git ls-files '*.json')" ]; then
+            echo "::error::No JSON files found. Delete .github/workflows/check-json.yml if this project doesn't need it."
+            exit 1
+          fi
+
       - name: Validate JSON syntax
         run: |
           status=0

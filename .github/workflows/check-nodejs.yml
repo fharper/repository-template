@@ -13,6 +13,13 @@ jobs:
       - name: Checkout this repository
         uses: actions/checkout@v6.0.1
 
+      - name: Check for a Node.js project
+        run: |
+          if [ -z "$(git ls-files package.json)" ]; then
+            echo "::error::No package.json found. Delete .github/workflows/check-nodejs.yml if this project doesn't need it."
+            exit 1
+          fi
+
       - name: Setup Node.js
         uses: actions/setup-node@v7.1.0
         with:

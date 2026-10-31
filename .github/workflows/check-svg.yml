@@ -13,6 +13,13 @@ jobs:
       - name: Checkout this repository
         uses: actions/checkout@v6.0.1
 
+      - name: Check for SVG files
+        run: |
+          if [ -z "$(git ls-files '*.svg')" ]; then
+            echo "::error::No SVG files found. Delete .github/workflows/check-svg.yml if this project doesn't need it."
+            exit 1
+          fi
+
       - name: "Validate SVG files"
         uses: "szepeviktor/svg-validator@v1.0.0"
         with:

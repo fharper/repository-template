@@ -13,6 +13,13 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v6.0.1
 
+      - name: Check for CSS files
+        run: |
+          if [ -z "$(git ls-files '*.css')" ]; then
+            echo "::error::No CSS files found. Delete .github/workflows/check-css.yml if this project doesn't need it."
+            exit 1
+          fi
+
       - name: Download .stylelintrc
         run: curl -fsSL -o .stylelintrc https://raw.githubusercontent.com/fharper/gh-configs/main/.stylelintrc
 
