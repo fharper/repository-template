@@ -7,11 +7,7 @@ permissions:
 
 jobs:
   tflint:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ubuntu-latest
 
     steps:
 
@@ -27,7 +23,7 @@ jobs:
         name: Cache plugins directory
         with:
           path: ~/.tflint.d/plugins
-          key: ${{ matrix.os }}-tflint-${{ hashFiles('.tflint.hcl') }}
+          key: ${{ runner.os }}-tflint-${{ hashFiles('.tflint.hcl') }}
 
       - uses: terraform-linters/setup-tflint@v3
         name: Setup TFLint
