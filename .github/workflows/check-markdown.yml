@@ -20,7 +20,7 @@ jobs:
         run: curl -fsSL -o .markdownlint.json https://raw.githubusercontent.com/fharper/gh-configs/main/.markdownlint.json
 
       - name: Validate Markdown
-        uses: DavidAnson/markdownlint-cli2-action@v13.0.0
+        uses: DavidAnson/markdownlint-cli2-action@v25.0.0
         with:
           command: config
           globs: |
