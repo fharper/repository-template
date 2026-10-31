@@ -1,0 +1,42 @@
+---
+name: Bug report
+description: Something isn't working as expected
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! Please search the existing issues first, in case it's already been reported.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear description of the bug, and what you expected to happen instead.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: How can I make it happen on my side?
+      placeholder: |
+        1. Go to...
+        2. Run...
+        3. See...
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Operating system, browser, versions, or anything else that might matter.
+      placeholder: macOS 26, Chrome 142, Node.js 26.13.0
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Anything else?
+      description: Logs, screenshots, or links that could help. You can drag and drop images here.
