@@ -1,0 +1,9 @@
+{
+    "name": "markdownlint-tools",
+    "private": true,
+    "description": "Pinned markdownlint-cli2 version for the Check Markdown workflow, kept up to date by Dependabot",
+    "devDependencies": {
+        "markdownlint-cli2": "0.24.0",
+        "markdownlint-cli2-formatter-template": "0.0.4"
+    }
+}
