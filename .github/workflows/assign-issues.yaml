@@ -12,6 +12,6 @@ jobs:
     steps:
 
       - name: Automatically assign the issue
-        uses: pozil/auto-assign-issue@v1.14.0
+        uses: pozil/auto-assign-issue@v4.1.0
         with:
           assignees: fharper
