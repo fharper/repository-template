@@ -1,0 +1,31 @@
+---
+name: Feature request
+description: Suggest an idea or an improvement
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the suggestion! Please search the existing issues first, in case someone already had the same idea. Keep in mind that this project is built around my own needs, so I may not take every idea, but I'd still like to hear it.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would it solve?
+      description: What are you trying to do, and what's getting in the way?
+    validations:
+      required: true
+
+  - type: textarea
+    id: idea
+    attributes:
+      label: What's your idea?
+      description: How you'd like it to work. If you thought of other ways to do it, mention them too.
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Anything else?
+      description: Screenshots, mockups, or links that could help. You can drag and drop images here.
