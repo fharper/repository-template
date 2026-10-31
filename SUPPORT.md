@@ -4,7 +4,7 @@ Keep in mind that I created this repository to share code and information with t
 
 ## Issues
 
-If you are having any problem, please create an [issue](/issues/new), and I'll get back to you as soon as possible. Pull Requests are welcome, but before doing so, let's discuss about it first in the issue.
+If you are having any problem, please create an [issue](../../issues/new), and I'll get back to you as soon as possible. Pull Requests are welcome, but before doing so, let's discuss about it first in the issue.
 
 ## Questions
 
