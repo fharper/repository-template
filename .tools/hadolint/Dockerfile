@@ -1,1 +1,1 @@
-FROM hadolint/hadolint:v2.15.0
+FROM hadolint/hadolint:v2.15.1
