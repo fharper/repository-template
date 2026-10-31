@@ -1,0 +1,36 @@
+---
+name: GitHub Configuration Validation
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/**'
+
+permissions:
+  contents: read
+
+jobs:
+  github-config-check:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout this repository
+        uses: actions/checkout@v6.0.1
+
+      - name: Setup Python
+        uses: actions/setup-python@v7.0.0
+        with:
+          python-version: '3.13'
+
+      - name: Install check-jsonschema
+        run: pip install check-jsonschema==0.38.2
+
+      - name: Validate Dependabot configuration
+        if: hashFiles('.github/dependabot.yml') != ''
+        run: check-jsonschema --builtin-schema vendor.dependabot .github/dependabot.yml
+
+      - name: Validate issue forms
+        if: hashFiles('.github/ISSUE_TEMPLATE/*.yml') != ''
+        run: |
+          find .github/ISSUE_TEMPLATE -name '*.yml' ! -name 'config.yml' -print0 |
+            xargs -0 check-jsonschema --builtin-schema vendor.github-issue-forms
