@@ -1,5 +1,7 @@
 # Security Policy
 
-## Reporting a Vulnerability
+## Reporting a vulnerability
 
-There is no bounty program for this repository but we welcome security report either in the form of a PR, an issue to mention the problem or if the issue is critical, an email to [hi@fred.dev](mailto:hi@fred.dev).
+Please don't report security issues in a public issue or pull request, since that would make the problem visible to everyone before it's fixed. Instead, send an email to [hi@fred.dev](mailto:hi@fred.dev) with what you found and how to reproduce it, and I'll get back to you as soon as possible.
+
+There is no bounty program for this repository.
