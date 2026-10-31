@@ -20,10 +20,15 @@ jobs:
       - name: Download .yamllint.yml
         run: curl -fsSL -o .yamllint.yml https://raw.githubusercontent.com/fharper/gh-configs/main/.yamllint.yml
 
-      - name: Lint YAML files
-        uses: karancode/yamllint-github-action@v3.0.0
+      - name: Setup Python
+        uses: actions/setup-python@v7.1.0
         with:
-          yamllint_config_datapath: .yamllint.yml
-          yamllint_strict: true
-        env:
-          GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: .tools/yamllint/requirements.txt
+
+      - name: Install yamllint
+        run: pip install -r .tools/yamllint/requirements.txt
+
+      - name: Lint YAML files
+        run: yamllint --strict --format github --config-file .yamllint.yml .

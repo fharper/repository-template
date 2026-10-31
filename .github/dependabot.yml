@@ -13,6 +13,8 @@ updates:
       interval: weekly
 
   - package-ecosystem: pip
-    directory: /.tools/check-jsonschema
+    directories:
+      - /.tools/check-jsonschema
+      - /.tools/yamllint
     schedule:
       interval: weekly
