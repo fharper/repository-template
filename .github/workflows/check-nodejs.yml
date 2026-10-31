@@ -16,7 +16,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4.0.2
         with:
-          node-version: v20.12.2
+          node-version: v26.13.0
           cache: npm
 
       - name: Install ESLint
