@@ -8,11 +8,11 @@ updates:
 
   - package-ecosystem: npm
     directories:
-      - /.github/tools/*
+      - /.tools/*
     schedule:
       interval: weekly
 
   - package-ecosystem: pip
-    directory: /.github/tools/check-jsonschema
+    directory: /.tools/check-jsonschema
     schedule:
       interval: weekly

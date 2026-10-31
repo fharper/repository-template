@@ -45,14 +45,14 @@ jobs:
         with:
           node-version: v26.13.0
           cache: npm
-          cache-dependency-path: .github/tools/eslint/package-lock.json
+          cache-dependency-path: .tools/eslint/package-lock.json
 
       - name: Install ESLint and neostandard
-        run: npm ci --prefix .github/tools/eslint
+        run: npm ci --prefix .tools/eslint
 
       - name: Download eslint.config.mjs
-        run: curl -fsSL -o .github/tools/eslint/eslint.config.mjs https://raw.githubusercontent.com/fharper/gh-configs/main/eslint.config.mjs
+        run: curl -fsSL -o .tools/eslint/eslint.config.mjs https://raw.githubusercontent.com/fharper/gh-configs/main/eslint.config.mjs
 
       # Rules https://eslint.org/docs/latest/rules/ and https://eslint.style/rules
       - name: Run ESLint
-        run: .github/tools/eslint/node_modules/.bin/eslint --config .github/tools/eslint/eslint.config.mjs . --format ./.github/tools/eslint/node_modules/eslint-formatter-pretty/index.js
+        run: .tools/eslint/node_modules/.bin/eslint --config .tools/eslint/eslint.config.mjs . --format ./.tools/eslint/node_modules/eslint-formatter-pretty/index.js
