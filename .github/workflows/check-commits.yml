@@ -21,7 +21,7 @@ jobs:
           url: "https://raw.githubusercontent.com/fharper/gh-configs/main/.commitlintrc.js"
 
       - name: Lint the commits
-        uses: wagoid/commitlint-github-action@v5.4.3
+        uses: wagoid/commitlint-github-action@v6.2.1
         with:
           configFile: .commitlintrc.js
           failOnWarnings: true
