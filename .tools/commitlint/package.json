@@ -1,0 +1,8 @@
+{
+    "name": "commitlint-tools",
+    "private": true,
+    "description": "Pinned commitlint version for the Check Commit Messages workflow, kept up to date by Dependabot",
+    "devDependencies": {
+        "@commitlint/cli": "21.2.4"
+    }
+}

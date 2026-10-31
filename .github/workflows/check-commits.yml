@@ -21,8 +21,40 @@ jobs:
       - name: Download .commitlintrc.mjs
         run: curl -fsSL -o .commitlintrc.mjs https://raw.githubusercontent.com/fharper/gh-configs/main/.commitlintrc.mjs
 
-      - name: Lint the commits
-        uses: wagoid/commitlint-github-action@v6.2.1
+      - name: Setup Node.js
+        uses: actions/setup-node@v7.1.0
         with:
-          configFile: .commitlintrc.mjs
-          failOnWarnings: true
+          node-version: v26.13.0
+          cache: npm
+          cache-dependency-path: .tools/commitlint/package-lock.json
+
+      - name: Install commitlint
+        run: npm ci --prefix .tools/commitlint
+
+      # Lint only the commits this event adds:
+      # - pull request: the commits of the pull request
+      # - push: the commits pushed since the previous push
+      # - first push of a new branch: the commits listed in that push
+      - name: Lint the commits
+        env:
+          EVENT: ${{ github.event_name }}
+          BEFORE: ${{ github.event.before }}
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          # --strict fails on warnings too, --verbose also shows the commits that pass
+          lint() { .tools/commitlint/node_modules/.bin/commitlint --config .commitlintrc.mjs --strict --verbose "$@"; }
+
+          if [ "$EVENT" = "pull_request" ]; then
+            lint --from "$BASE" --to "$HEAD"
+          elif [ "$BEFORE" != "0000000000000000000000000000000000000000" ]; then
+            lint --from "$BEFORE" --to "$GITHUB_SHA"
+          else
+            # A new branch has no previous push (BEFORE is all zeros), so lint each
+            # commit listed in the push event, and fail if any of them fails
+            status=0
+            for sha in $(jq -r '.commits[].id' "$GITHUB_EVENT_PATH"); do
+              git log -1 --format=%B "$sha" | lint || status=1
+            done
+            exit $status
+          fi
