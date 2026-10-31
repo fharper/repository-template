@@ -2,6 +2,9 @@
 name: YAML Validation
 on: [push, workflow_dispatch]
 
+permissions:
+  contents: read
+
 jobs:
   yaml-check:
     runs-on: ubuntu-latest

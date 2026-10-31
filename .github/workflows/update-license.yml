@@ -6,6 +6,10 @@ on:
     - cron: '0 4 1 1 *'  # Midnight of December 31st (GitHub Action are using UTC)
   workflow_dispatch:
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   update-license-year:
     runs-on: ubuntu-latest
