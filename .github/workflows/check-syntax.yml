@@ -17,7 +17,7 @@ jobs:
     steps:
 
       - name: Checkout this repository
-        uses: actions/checkout@v6.0.1
+        uses: actions/checkout@v7.0.1
 
       - name: Download .vale.ini
         run: curl -fsSL -o .vale.ini https://raw.githubusercontent.com/fharper/gh-configs/main/.vale.ini
