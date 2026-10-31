@@ -3,7 +3,7 @@ name: Update License Year
 
 on:
   schedule:
-    - cron: '0 4 1 1 *'  # Midnight of December 31st (GitHub Action are using UTC)
+    - cron: '0 4 1 1 *'  # January 1st at 04:00 UTC, which is 11 PM Eastern on December 31st
   workflow_dispatch:
 
 permissions:
