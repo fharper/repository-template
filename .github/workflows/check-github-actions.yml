@@ -9,6 +9,7 @@ on:
 
 permissions:
   contents: read
+  checks: write
 
 jobs:
   github-actions-check:
@@ -18,11 +19,10 @@ jobs:
       - name: Checkout this repository
         uses: actions/checkout@v6.0.1
 
-      - name: Download actionlint
-        id: get_actionlint
-        run: bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
-        shell: bash
-
       - name: Check Workflow files
-        run: ${{ steps.get_actionlint.outputs.executable }} -color -shellcheck=
-        shell: bash
+        uses: reviewdog/action-actionlint@v1.81.1
+        with:
+          reporter: github-check
+          filter_mode: nofilter
+          fail_level: any
+          actionlint_flags: -shellcheck=
