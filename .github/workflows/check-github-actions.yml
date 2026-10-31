@@ -1,11 +1,15 @@
 ---
 name: Check GitHub Actions
 on:
-  workflow_dispatch:
   push:
     paths:
       - '.github/workflows/**.yml'
       - '.github/workflows/**.yaml'
+  pull_request:
+    paths:
+      - '.github/workflows/**.yml'
+      - '.github/workflows/**.yaml'
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -13,6 +17,7 @@ permissions:
 
 jobs:
   github-actions-check:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.fork
     runs-on: ubuntu-latest
     steps:
 

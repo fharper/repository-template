@@ -1,16 +1,20 @@
 ---
 name: Check GitHub Config
 on:
-  workflow_dispatch:
   push:
     paths:
       - '.github/**'
+  pull_request:
+    paths:
+      - '.github/**'
+  workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
   github-config-check:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.fork
     runs-on: ubuntu-latest
     steps:
 

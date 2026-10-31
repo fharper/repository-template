@@ -1,6 +1,9 @@
 ---
 name: Check Syntax
-on: [push, workflow_dispatch]
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -8,6 +11,7 @@ permissions:
 
 jobs:
   syntax-check:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.fork
     name: vale
     runs-on: ubuntu-latest
     steps:
