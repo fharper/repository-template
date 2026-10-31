@@ -16,9 +16,7 @@ jobs:
           fetch-depth: 0
 
       - name: Download .commitlintrc.mjs
-        uses: suisei-cn/actions-download-file@v1.6.1
-        with:
-          url: "https://raw.githubusercontent.com/fharper/gh-configs/main/.commitlintrc.mjs"
+        run: curl -fsSL -o .commitlintrc.mjs https://raw.githubusercontent.com/fharper/gh-configs/main/.commitlintrc.mjs
 
       - name: Lint the commits
         uses: wagoid/commitlint-github-action@v6.2.1
