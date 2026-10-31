@@ -1,5 +1,5 @@
 ---
-name: Validate if commits are signed
+name: Check Signed Commits
 on: [pull_request_target]
 
 permissions:

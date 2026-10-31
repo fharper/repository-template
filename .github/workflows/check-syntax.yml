@@ -1,5 +1,5 @@
 ---
-name: Syntax Validation
+name: Check Syntax
 on: [push, workflow_dispatch]
 
 permissions:

@@ -1,5 +1,5 @@
 ---
-name: Assign all issues to fharper
+name: Assign Issues
 on:
   issues:
     types: [opened]

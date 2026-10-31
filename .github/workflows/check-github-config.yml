@@ -1,5 +1,5 @@
 ---
-name: GitHub Configuration Validation
+name: Check GitHub Config
 on:
   workflow_dispatch:
   push:

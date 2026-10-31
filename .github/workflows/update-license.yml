@@ -1,5 +1,5 @@
 ---
-name: Update copyright years
+name: Update License Year
 
 on:
   schedule:

@@ -1,5 +1,5 @@
 ---
-name: Validate SVG files
+name: Check SVG
 on: [push, workflow_dispatch]
 
 permissions:

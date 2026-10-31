@@ -1,5 +1,5 @@
 ---
-name: JSON Validation
+name: Check JSON
 on: [push, workflow_dispatch]
 
 permissions:

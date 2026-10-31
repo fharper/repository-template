@@ -1,5 +1,5 @@
 ---
-name: Validate CSS files
+name: Check CSS
 on: [push, workflow_dispatch]
 
 permissions:

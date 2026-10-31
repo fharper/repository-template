@@ -1,5 +1,5 @@
 ---
-name: YAML Validation
+name: Check YAML
 on: [push, workflow_dispatch]
 
 permissions:

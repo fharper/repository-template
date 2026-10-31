@@ -1,5 +1,5 @@
 ---
-name: Terraform Validation
+name: Check Terraform
 on: [push, workflow_dispatch]
 
 permissions:
