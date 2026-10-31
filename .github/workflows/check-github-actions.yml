@@ -5,15 +5,16 @@ on:
     paths:
       - '.github/workflows/**.yml'
       - '.github/workflows/**.yaml'
+      - '.tools/actionlint/**'
   pull_request:
     paths:
       - '.github/workflows/**.yml'
       - '.github/workflows/**.yaml'
+      - '.tools/actionlint/**'
   workflow_dispatch:
 
 permissions:
   contents: read
-  checks: write
 
 jobs:
   github-actions-check:
@@ -24,10 +25,17 @@ jobs:
       - name: Checkout this repository
         uses: actions/checkout@v7.0.1
 
-      - name: Check Workflow files
-        uses: reviewdog/action-actionlint@v1.81.1
+      - name: Setup Go
+        uses: actions/setup-go@v7.0.0
         with:
-          reporter: github-check
-          filter_mode: nofilter
-          fail_level: any
-          actionlint_flags: -shellcheck=
+          go-version-file: .tools/actionlint/go.mod
+          cache-dependency-path: .tools/actionlint/go.sum
+
+      - name: Build actionlint
+        run: go -C .tools/actionlint build -o "$RUNNER_TEMP/actionlint" github.com/rhysd/actionlint/cmd/actionlint
+
+      # Print each problem as a GitHub annotation on the file and line
+      - name: Check Workflow files
+        env:
+          FORMAT: '{{range $err := .}}::error file={{$err.Filepath}},line={{$err.Line}},col={{$err.Column}}::{{$err.Message}}\n{{end}}'
+        run: '"$RUNNER_TEMP/actionlint" -shellcheck= -format "$FORMAT"'
