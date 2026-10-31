@@ -12,6 +12,11 @@ updates:
     schedule:
       interval: weekly
 
+  - package-ecosystem: docker
+    directory: /.tools/hadolint
+    schedule:
+      interval: weekly
+
   - package-ecosystem: gomod
     directory: /.tools/actionlint
     schedule:

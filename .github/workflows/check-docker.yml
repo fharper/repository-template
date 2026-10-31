@@ -41,6 +41,8 @@ jobs:
         uses: actions/checkout@v7.0.1
 
       # Rules at https://github.com/hadolint/hadolint#rules
-      # hadolint/hadolint-action is causing issue with act: https://github.com/hadolint/hadolint/issues/823
+      # The hadolint image is pinned in .tools/hadolint/Dockerfile, so Dependabot can update it
       - name: Validate Dockerfile
-        run: docker run -v "$(pwd)":"/files" hadolint/hadolint:v2.15.1 hadolint /files/Dockerfile
+        run: |
+          image="$(sed -n 's/^FROM //p' .tools/hadolint/Dockerfile)"
+          docker run --rm -i "$image" hadolint - < Dockerfile
