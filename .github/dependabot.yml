@@ -11,3 +11,8 @@ updates:
       - /.github/tools/*
     schedule:
       interval: weekly
+
+  - package-ecosystem: pip
+    directory: /.github/tools/check-jsonschema
+    schedule:
+      interval: weekly

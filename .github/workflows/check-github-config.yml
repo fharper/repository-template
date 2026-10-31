@@ -25,9 +25,11 @@ jobs:
         uses: actions/setup-python@v7.1.0
         with:
           python-version: '3.13'
+          cache: pip
+          cache-dependency-path: .github/tools/check-jsonschema/requirements.txt
 
       - name: Install check-jsonschema
-        run: pip install check-jsonschema==0.38.2
+        run: pip install -r .github/tools/check-jsonschema/requirements.txt
 
       - name: Validate Dependabot configuration
         if: hashFiles('.github/dependabot.yml') != ''
