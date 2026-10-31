@@ -15,10 +15,10 @@ These fail with a message naming the file to delete when the project has none of
 
 | Workflow | Checks | Delete when the project has no… |
 | --- | --- | --- |
-| `check-css.yml` | CSS with stylelint | CSS (also delete `.github/tools/` and the `npm` entry in `.github/dependabot.yml`) |
+| `check-css.yml` | CSS with stylelint | CSS (also delete `.github/tools/stylelint/`) |
 | `check-docker.yml` | Dockerfile with hadolint | Dockerfile |
 | `check-json.yml` | JSON syntax | JSON |
-| `check-nodejs.yml` | JavaScript with ESLint and neostandard | `package.json` |
+| `check-nodejs.yml` | JavaScript with ESLint and neostandard | `package.json` (also delete `.github/tools/eslint/`) |
 | `check-svg.yml` | SVG files against SVG 1.1, which needs the XML declaration and SVG 1.1 DOCTYPE | SVG |
 | `check-terraform.yml` | Terraform with TFLint | Terraform |
 | `update-license.yml` | Copyright year in the license | Year in its license |

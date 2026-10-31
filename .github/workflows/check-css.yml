@@ -48,10 +48,10 @@ jobs:
         with:
           node-version: v26.13.0
           cache: npm
-          cache-dependency-path: .github/tools/package-lock.json
+          cache-dependency-path: .github/tools/stylelint/package-lock.json
 
       - name: Install stylelint
-        run: npm ci --prefix .github/tools
+        run: npm ci --prefix .github/tools/stylelint
 
       - name: Run stylelint
-        run: .github/tools/node_modules/.bin/stylelint --config-basedir .github/tools "**/*.css"
+        run: .github/tools/stylelint/node_modules/.bin/stylelint --config-basedir .github/tools/stylelint "**/*.css"
