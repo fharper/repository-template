@@ -34,3 +34,7 @@ jobs:
         run: |
           find .github/ISSUE_TEMPLATE -name '*.yml' ! -name 'config.yml' -print0 |
             xargs -0 check-jsonschema --builtin-schema vendor.github-issue-forms
+
+      - name: Validate issue template configuration
+        if: hashFiles('.github/ISSUE_TEMPLATE/config.yml') != ''
+        run: check-jsonschema --builtin-schema vendor.github-issue-config .github/ISSUE_TEMPLATE/config.yml
