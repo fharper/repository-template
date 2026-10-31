@@ -15,7 +15,7 @@ These fail with a message naming the file to delete when the project has none of
 
 | Workflow | Checks | Delete when the project has no… |
 | --- | --- | --- |
-| `check-css.yml` | CSS with stylelint | CSS |
+| `check-css.yml` | CSS with stylelint | CSS (also delete `.github/tools/` and the `npm` entry in `.github/dependabot.yml`) |
 | `check-docker.yml` | Dockerfile with hadolint | Dockerfile |
 | `check-json.yml` | JSON syntax | JSON |
 | `check-nodejs.yml` | JavaScript with ESLint and neostandard | `package.json` |

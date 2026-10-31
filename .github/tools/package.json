@@ -1,0 +1,9 @@
+{
+    "name": "tools",
+    "private": true,
+    "description": "Pinned versions of the linters used by the GitHub Actions workflows, kept up to date by Dependabot",
+    "devDependencies": {
+        "stylelint": "17.16.0",
+        "stylelint-config-standard": "40.0.0"
+    }
+}

@@ -43,7 +43,15 @@ jobs:
       - name: Download .stylelintrc
         run: curl -fsSL -o .stylelintrc https://raw.githubusercontent.com/fharper/gh-configs/main/.stylelintrc
 
-      - name: stylelint
-        uses: actions-hub/stylelint@v1.1.6
-        env:
-          PATTERN: "**/*.css"
+      - name: Setup Node.js
+        uses: actions/setup-node@v7.1.0
+        with:
+          node-version: v26.13.0
+          cache: npm
+          cache-dependency-path: .github/tools/package-lock.json
+
+      - name: Install stylelint
+        run: npm ci --prefix .github/tools
+
+      - name: Run stylelint
+        run: .github/tools/node_modules/.bin/stylelint --config-basedir .github/tools "**/*.css"
