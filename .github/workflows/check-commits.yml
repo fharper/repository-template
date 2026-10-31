@@ -16,7 +16,7 @@ jobs:
           fetch-depth: 0
 
       - name: Download .commitlintrc.js
-        uses: suisei-cn/actions-download-file@v1.4.0
+        uses: suisei-cn/actions-download-file@v1.6.1
         with:
           url: "https://raw.githubusercontent.com/fharper/gh-configs/main/.commitlintrc.js"
 
