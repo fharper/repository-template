@@ -44,7 +44,7 @@ jobs:
       - name: Download .tflint.hcl
         run: curl -fsSL -o .tflint.hcl https://raw.githubusercontent.com/fharper/gh-configs/main/.tflint.hcl
 
-      - uses: actions/cache@v5.0.3
+      - uses: actions/cache@v6.1.0
         name: Cache plugins directory
         with:
           path: ~/.tflint.d/plugins
