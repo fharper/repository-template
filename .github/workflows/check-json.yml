@@ -6,19 +6,35 @@ permissions:
   contents: read
 
 jobs:
-  json-check:
+  files:
     runs-on: ubuntu-latest
+    outputs:
+      found: ${{ steps.check.outputs.found }}
     steps:
 
       - name: Checkout this repository
         uses: actions/checkout@v6.0.1
 
       - name: Check for JSON files
+        id: check
         run: |
-          if [ -z "$(git ls-files '*.json')" ]; then
+          if [ -n "$(git ls-files '*.json')" ]; then
+            echo "found=true" >> "$GITHUB_OUTPUT"
+          elif [ "$GITHUB_REPOSITORY" = "fharper/repository-template" ]; then
+            echo "found=false" >> "$GITHUB_OUTPUT"
+          else
             echo "::error::No JSON files found. Delete .github/workflows/check-json.yml if this project doesn't need it."
             exit 1
           fi
+
+  json-check:
+    needs: files
+    if: needs.files.outputs.found == 'true'
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout this repository
+        uses: actions/checkout@v6.0.1
 
       - name: Validate JSON syntax
         run: |

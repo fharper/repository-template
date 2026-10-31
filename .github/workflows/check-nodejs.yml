@@ -6,19 +6,35 @@ permissions:
   contents: read
 
 jobs:
-  nodejs-check:
+  files:
     runs-on: ubuntu-latest
+    outputs:
+      found: ${{ steps.check.outputs.found }}
     steps:
 
       - name: Checkout this repository
         uses: actions/checkout@v6.0.1
 
       - name: Check for a Node.js project
+        id: check
         run: |
-          if [ -z "$(git ls-files package.json)" ]; then
+          if [ -n "$(git ls-files package.json)" ]; then
+            echo "found=true" >> "$GITHUB_OUTPUT"
+          elif [ "$GITHUB_REPOSITORY" = "fharper/repository-template" ]; then
+            echo "found=false" >> "$GITHUB_OUTPUT"
+          else
             echo "::error::No package.json found. Delete .github/workflows/check-nodejs.yml if this project doesn't need it."
             exit 1
           fi
+
+  nodejs-check:
+    needs: files
+    if: needs.files.outputs.found == 'true'
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout this repository
+        uses: actions/checkout@v6.0.1
 
       - name: Setup Node.js
         uses: actions/setup-node@v7.1.0

@@ -6,19 +6,35 @@ permissions:
   contents: read
 
 jobs:
+  files:
+    runs-on: ubuntu-latest
+    outputs:
+      found: ${{ steps.check.outputs.found }}
+    steps:
+
+      - name: Checkout this repository
+        uses: actions/checkout@v6.0.1
+
+      - name: Check for CSS files
+        id: check
+        run: |
+          if [ -n "$(git ls-files '*.css')" ]; then
+            echo "found=true" >> "$GITHUB_OUTPUT"
+          elif [ "$GITHUB_REPOSITORY" = "fharper/repository-template" ]; then
+            echo "found=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "::error::No CSS files found. Delete .github/workflows/check-css.yml if this project doesn't need it."
+            exit 1
+          fi
+
   csslint:
+    needs: files
+    if: needs.files.outputs.found == 'true'
     runs-on: ubuntu-latest
     steps:
 
       - name: Checkout the code
         uses: actions/checkout@v6.0.1
-
-      - name: Check for CSS files
-        run: |
-          if [ -z "$(git ls-files '*.css')" ]; then
-            echo "::error::No CSS files found. Delete .github/workflows/check-css.yml if this project doesn't need it."
-            exit 1
-          fi
 
       - name: Download .stylelintrc
         run: curl -fsSL -o .stylelintrc https://raw.githubusercontent.com/fharper/gh-configs/main/.stylelintrc
