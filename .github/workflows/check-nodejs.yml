@@ -19,15 +19,12 @@ jobs:
           node-version: v26.13.0
           cache: npm
 
-      - name: Install ESLint
-        run: npm install -g eslint@8.56.0
+      - name: Install ESLint and neostandard
+        run: npm install --no-save eslint@10.12.0 neostandard@0.14.1 eslint-formatter-pretty@7.1.0
 
-      - name: Install ESLint configurations dependencies
-        run: npm install eslint-config-standard eslint-plugin-import eslint-plugin-n eslint-plugin-promise eslint-formatter-pretty@v5.0.0
+      - name: Download eslint.config.mjs
+        run: curl -fsSL -o eslint.config.mjs https://raw.githubusercontent.com/fharper/gh-configs/main/eslint.config.mjs
 
-      - name: Download .eslintrc.yml
-        run: curl -fsSL -o .eslintrc.yml https://raw.githubusercontent.com/fharper/gh-configs/main/.eslintrc.yml
-
-      # Rules https://eslint.org/docs/latest/rules/
+      # Rules https://eslint.org/docs/latest/rules/ and https://eslint.style/rules
       - name: Run ESLint
-        run: eslint .  --format=pretty --config .eslintrc.yml  --ext .js
+        run: npx eslint . --format=pretty
