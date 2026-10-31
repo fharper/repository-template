@@ -18,7 +18,9 @@ updates:
       interval: weekly
 
   - package-ecosystem: gomod
-    directory: /.tools/actionlint
+    directories:
+      - /.tools/actionlint
+      - /.tools/vale
     schedule:
       interval: weekly
 
