@@ -21,6 +21,7 @@ updates:
     directories:
       - /.tools/actionlint
       - /.tools/vale
+      - /.tools/zshellcheck
     schedule:
       interval: weekly
 

@@ -1,0 +1,85 @@
+---
+name: Check Zsh
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  files:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.fork
+    runs-on: ubuntu-latest
+    outputs:
+      found: ${{ steps.check.outputs.found }}
+    steps:
+
+      - name: Checkout this repository
+        uses: actions/checkout@v7.0.1
+
+      # A zsh script is a .zsh file, or any file starting with a zsh shebang (#!/usr/bin/env zsh)
+      - name: Check for zsh scripts
+        id: check
+        run: |
+          git ls-files | while IFS= read -r f; do
+            case "$f" in *.zsh) echo "$f" ;; *) if head -n1 "$f" 2>/dev/null | grep -qE '^#!.*\bzsh\b'; then echo "$f"; fi ;; esac
+          done > "$RUNNER_TEMP/zsh-files"
+          if [ -s "$RUNNER_TEMP/zsh-files" ]; then
+            echo "found=true" >> "$GITHUB_OUTPUT"
+          elif [ "$GITHUB_REPOSITORY" = "fharper/repository-template" ]; then
+            echo "found=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "::error::No zsh scripts found. Delete .github/workflows/check-zsh.yml if this project doesn't need it."
+            exit 1
+          fi
+
+  zsh-check:
+    needs: files
+    if: needs.files.outputs.found == 'true'
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout this repository
+        uses: actions/checkout@v7.0.1
+
+      - name: Install zsh
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq zsh
+
+      - name: Setup Go
+        uses: actions/setup-go@v7.0.0
+        with:
+          go-version-file: .tools/zshellcheck/go.mod
+          cache-dependency-path: .tools/zshellcheck/go.sum
+
+      - name: Build ZShellCheck
+        run: go -C .tools/zshellcheck build -o "$RUNNER_TEMP/zshellcheck" github.com/afadesigns/zshellcheck/cmd/zshellcheck
+
+      - name: List the zsh scripts
+        run: |
+          git ls-files | while IFS= read -r f; do
+            case "$f" in *.zsh) echo "$f" ;; *) if head -n1 "$f" 2>/dev/null | grep -qE '^#!.*\bzsh\b'; then echo "$f"; fi ;; esac
+          done > "$RUNNER_TEMP/zsh-files"
+
+      # zsh -n parses each script without running it, to catch syntax errors
+      - name: Check the syntax
+        run: |
+          status=0
+          while IFS= read -r file; do
+            if ! output="$(zsh -n "$file" 2>&1)"; then
+              line="$(printf '%s' "$output" | sed -n 's/^[^:]*:\([0-9]*\):.*/\1/p' | head -1)"
+              echo "::error file=$file,line=${line:-1}::$output"
+              status=1
+            fi
+          done < "$RUNNER_TEMP/zsh-files"
+          exit $status
+
+      # A .zshellcheckrc at the repo root can turn off rules that don't make sense for a project.
+      # GitHub shows only the first 10 errors, 10 warnings and 10 notices of a step on the files;
+      # the step's log lists every finding.
+      - name: Lint the scripts
+        if: ${{ !cancelled() }}
+        shell: bash
+        run: |
+          xargs -a "$RUNNER_TEMP/zsh-files" -d '\n' "$RUNNER_TEMP/zshellcheck" -no-banner -format json | jq -r '.[] | "::\(if .Level == "error" then "error" elif .Level == "warning" then "warning" else "notice" end) file=\(.File),line=\(.Line),col=\(.Column)::\(.Message) (\(.KataID), \(.Level))"'
