@@ -28,6 +28,8 @@ updates:
   - package-ecosystem: pip
     directories:
       - /.tools/check-jsonschema
+      - /.tools/clang-format
+      - /.tools/cppcheck
       - /.tools/yamllint
     schedule:
       interval: weekly

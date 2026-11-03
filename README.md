@@ -15,6 +15,7 @@ These fail with a message naming the file to delete when the project has none of
 
 | Workflow | Checks | Delete when the project has no… |
 | --- | --- | --- |
+| `check-cpp.yml` | C++ with cppcheck, and clang-format when there's a `.clang-format` | C++ (also delete `.tools/cppcheck/` and `.tools/clang-format/`, and their lines in the `pip` entry of `.github/dependabot.yml`) |
 | `check-css.yml` | CSS with stylelint | CSS (also delete `.tools/stylelint/`) |
 | `check-docker.yml` | Dockerfile with hadolint | Dockerfile (also delete `.tools/hadolint/` and the `docker` entry in `.github/dependabot.yml`) |
 | `check-json.yml` | JSON syntax | JSON |

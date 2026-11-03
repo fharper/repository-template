@@ -1,0 +1,80 @@
+---
+name: Check C++
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  files:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.fork
+    runs-on: ubuntu-latest
+    outputs:
+      found: ${{ steps.check.outputs.found }}
+    steps:
+
+      - name: Checkout this repository
+        uses: actions/checkout@v7.0.1
+
+      - name: Check for C++ files
+        id: check
+        run: |
+          if [ -n "$(git ls-files '*.cpp' '*.cc' '*.cxx' '*.h' '*.hh' '*.hpp' '*.hxx')" ]; then
+            echo "found=true" >> "$GITHUB_OUTPUT"
+          elif [ "$GITHUB_REPOSITORY" = "fharper/repository-template" ]; then
+            echo "found=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "::error::No C++ files found. Delete .github/workflows/check-cpp.yml if this project doesn't need it."
+            exit 1
+          fi
+
+  cpp-check:
+    needs: files
+    if: needs.files.outputs.found == 'true'
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout this repository
+        uses: actions/checkout@v7.0.1
+
+      - name: Setup Python
+        uses: actions/setup-python@v7.1.0
+        with:
+          python-version-file: .tools/.tool-versions
+          cache: pip
+          cache-dependency-path: |
+            .tools/cppcheck/requirements.txt
+            .tools/clang-format/requirements.txt
+
+      - name: Install cppcheck and clang-format
+        run: pip install -r .tools/cppcheck/requirements.txt -r .tools/clang-format/requirements.txt
+
+      # cppcheck analyzes the code without building it, so missing includes aren't reported.
+      # A .cppcheck-suppressions file at the repo root can turn off rules that don't fit a project.
+      # Errors are shown as errors, warnings as warnings, and the rest (style, performance...) as notices.
+      - name: Analyze the code
+        shell: bash
+        run: |
+          suppressions=()
+          [ -f .cppcheck-suppressions ] && suppressions=(--suppressions-list=.cppcheck-suppressions)
+          git ls-files -z '*.cpp' '*.cc' '*.cxx' '*.h' '*.hh' '*.hpp' '*.hxx' |
+            xargs -0 cppcheck --enable=warning,style,performance,portability --inline-suppr --quiet \
+              --suppress=missingInclude --suppress=missingIncludeSystem "${suppressions[@]}" \
+              --error-exitcode=1 --template='{severity}|{file}|{line}|{column}|{id}|{message}' 2>&1 |
+            awk -F'|' '{ level = ($1 == "error") ? "error" : ($1 == "warning") ? "warning" : "notice"; printf "::%s file=%s,line=%s,col=%s::%s (%s, %s)\n", level, $2, $3, $4, $6, $5, $1 }'
+
+      # Only when the repo has a .clang-format, so each project keeps its own style
+      - name: Check the formatting
+        if: ${{ !cancelled() }}
+        run: |
+          if [ ! -f .clang-format ]; then
+            echo "No .clang-format in this repository, formatting not checked."
+            exit 0
+          fi
+          git ls-files -z '*.cpp' '*.cc' '*.cxx' '*.h' '*.hh' '*.hpp' '*.hxx' |
+            xargs -0 clang-format --dry-run --Werror 2>&1 |
+            sed -nE 's/^([^:]+):([0-9]+):([0-9]+): error: (.*)$/::error file=\1,line=\2,col=\3::\4/p'
+          git ls-files -z '*.cpp' '*.cc' '*.cxx' '*.h' '*.hh' '*.hpp' '*.hxx' | xargs -0 clang-format --dry-run --Werror
