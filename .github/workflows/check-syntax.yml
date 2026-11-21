@@ -38,7 +38,7 @@ jobs:
         run: curl -fsSL -o styles/config/vocabularies/base/accept.txt https://raw.githubusercontent.com/fharper/gh-configs/main/styles/config/vocabularies/base/accept.txt
 
       - name: Setup Go
-        uses: actions/setup-go@v7.0.0
+        uses: actions/setup-go@v7.1.0
         with:
           go-version-file: .tools/vale/go.mod
           cache-dependency-path: .tools/vale/go.sum
